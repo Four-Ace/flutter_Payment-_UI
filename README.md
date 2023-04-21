@@ -1,6 +1,9 @@
 # toonflix
 
 A new Flutter project.
+During nomard coder's video, save the works on git.
+
+work1~ work3 : adapt git with Flutter UI ex.
 
 ## Getting Started
 
