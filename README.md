@@ -1,12 +1,14 @@
 # flutter_Payment_UI
 
 A new Flutter project.
+
 During nomard coder's video, save the works on git.
 
 ![캡처](https://user-images.githubusercontent.com/59431088/233682096-80f67563-75eb-44c0-9bba-ab4ddd885ceb.PNG)
 
 
 work1 ~ work3 : adapt git with Flutter UI ex.
+
 v1 ~ v5 : restart myself without notes.
 
 ## Getting Started
