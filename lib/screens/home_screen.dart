@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -8,6 +10,55 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  static const int maxTime = 5;
+  int totalSeconds = maxTime;
+  bool isRunning = false;
+  int totalPomodoros = 0;
+  late Timer timer;
+
+  void onTick(Timer timer) {
+    if (totalSeconds == 0) {
+      resetTimer();
+      setState(() {
+        totalPomodoros = totalPomodoros + 1;
+      });
+    } else {
+      setState(() {
+        totalSeconds = totalSeconds - 1;
+      });
+    }
+  }
+
+  void onStartPressed() {
+    timer = Timer.periodic(
+      const Duration(seconds: 1),
+      onTick,
+    );
+    setState(() {
+      isRunning = true;
+    });
+  }
+
+  void onPausePressed() {
+    timer.cancel();
+    setState(() {
+      isRunning = false;
+    });
+  }
+
+  void resetTimer() {
+    timer.cancel();
+    setState(() {
+      isRunning = false;
+      totalSeconds = maxTime;
+    });
+  }
+
+  String format(int second) {
+    var duration = Duration(seconds: second);
+    return duration.toString().split(".").first.substring(2, 7);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               alignment: Alignment.bottomCenter,
               child: Text(
-                '25:00',
+                format(totalSeconds),
                 style: TextStyle(
                   color: Theme.of(context).cardColor,
                   fontSize: 89,
@@ -31,17 +82,40 @@ class _HomeScreenState extends State<HomeScreen> {
           Flexible(
             flex: 3,
             child: Center(
-              child: SizedBox(
-                width: 150,
-                height: 150,
-                child: IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.play_circle_outline,
-                    color: Theme.of(context).cardColor,
-                    size: 120,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  const SizedBox(
+                    width: 150,
+                    height: 150,
                   ),
-                ),
+                  SizedBox(
+                    width: 150,
+                    height: 150,
+                    child: IconButton(
+                      onPressed: isRunning ? onPausePressed : onStartPressed,
+                      icon: Icon(
+                        isRunning
+                            ? Icons.pause_circle_outline
+                            : Icons.play_circle_outline,
+                        color: Theme.of(context).cardColor,
+                        size: 120,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 150,
+                    height: 150,
+                    child: IconButton(
+                      onPressed: resetTimer,
+                      icon: Icon(
+                        Icons.restore,
+                        color: Theme.of(context).cardColor,
+                        size: 80,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -52,6 +126,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(50),
+                      ),
                       color: Theme.of(context).cardColor,
                     ),
                     child: Column(
@@ -67,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Text(
-                          '0',
+                          '$totalPomodoros',
                           style: TextStyle(
                             fontSize: 58,
                             color:
