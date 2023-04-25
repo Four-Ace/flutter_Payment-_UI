@@ -9,6 +9,9 @@ During nomard coder's video, save the works on git.
 
 
 work1 ~ work3 : adapt git with Flutter UI ex.
+
 v1 ~ v5 : Make payment UI restart myself without notes.
+
 v6 ~ v8 : Make Timer with interaction. 
+
 v8',v8" : Make save point for share previous codes. 
