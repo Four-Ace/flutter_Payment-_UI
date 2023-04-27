@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toonflix/screens/home_screen.dart';
+import 'package:toonflix/screens/home_screen_for_Timer.dart';
 
 void main() {
   runApp(const App());
